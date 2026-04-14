@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { GameSettings, DEFAULT_SETTINGS } from '../constants/settings';
-import { Pack, DEFAULT_PACKS } from '../constants/packs';
+import { Pack, DEFAULT_PACKS, RANDOM_PACK } from '../constants/packs';
 import { Player, assignRoles, pickRandomWord } from '../utils/gameLogic';
 
 export type GamePhase = 
@@ -47,6 +47,9 @@ interface GameStore {
   roleRevealIndex: number;  // which player is currently seeing their role
   voteIndex: number;        // which player is currently voting
   
+  // Random Pack tracking
+  usedRandomPacks: string[];
+
   // Actions
   setMode: (mode: 'passplay' | 'online' | null) => void;
   addPlayer: (name: string) => void;
@@ -73,7 +76,7 @@ export const useGameStore = create<GameStore>((set, get) => ({
   mode: null,
   players: [],
   settings: DEFAULT_SETTINGS,
-  selectedPack: DEFAULT_PACKS[0],
+  selectedPack: RANDOM_PACK,
   
   phase: 'setup',
   currentPlayerIndex: 0,
@@ -87,6 +90,7 @@ export const useGameStore = create<GameStore>((set, get) => ({
   
   roleRevealIndex: 0,
   voteIndex: 0,
+  usedRandomPacks: [],
 
   setMode: (mode) => set({ mode }),
   
@@ -134,13 +138,29 @@ export const useGameStore = create<GameStore>((set, get) => ({
       players = [...players].sort(() => Math.random() - 0.5);
     }
     const playersWithRoles = assignRoles(players, state.settings.fakerCount);
-    const { word, category } = pickRandomWord(state.selectedPack);
+    
+    let packToUse = state.selectedPack;
+    let newUsedRandomPacks = [...state.usedRandomPacks];
+
+    if (packToUse.id === 'random') {
+      let availablePacks = DEFAULT_PACKS.filter(p => !newUsedRandomPacks.includes(p.id));
+      if (availablePacks.length === 0) {
+        // Reset if all used
+        availablePacks = [...DEFAULT_PACKS];
+        newUsedRandomPacks = [];
+      }
+      packToUse = availablePacks[Math.floor(Math.random() * availablePacks.length)];
+      newUsedRandomPacks.push(packToUse.id);
+    }
+
+    const { word, category } = pickRandomWord(packToUse);
     
     return {
       players: playersWithRoles,
       fakers: playersWithRoles.filter(p => p.isFaker).map(p => p.id),
       secretWord: word,
-      category: category
+      category: category,
+      usedRandomPacks: newUsedRandomPacks
     };
   }),
 
@@ -243,6 +263,7 @@ export const useGameStore = create<GameStore>((set, get) => ({
     scores: Object.fromEntries(get().players.map(p => [p.id, 0])),
     roundNumber: 1,
     roleRevealIndex: 0,
-    voteIndex: 0
+    voteIndex: 0,
+    usedRandomPacks: []
   })
 }));

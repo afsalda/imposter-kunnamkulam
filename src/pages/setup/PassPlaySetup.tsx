@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { useHaptics } from '../../hooks/useHaptics';
 import { useGameStore } from '../../store/gameStore';
-import { DEFAULT_PACKS } from '../../constants/packs';
+import { DEFAULT_PACKS, RANDOM_PACK } from '../../constants/packs';
 import { ArrowLeft, Plus, X, Settings2 } from 'lucide-react';
 
 export default function PassPlaySetup() {
@@ -109,7 +109,7 @@ export default function PassPlaySetup() {
         <section className="mb-8">
           <h2 className="text-lg font-bold text-text-secondary uppercase tracking-wider mb-4">Word Pack</h2>
           <div className="flex overflow-x-auto gap-3 pb-4 -mx-6 px-6 snap-x">
-            {DEFAULT_PACKS.map(pack => (
+            {[RANDOM_PACK, ...DEFAULT_PACKS].map(pack => (
               <button
                 key={pack.id}
                 onClick={() => { trigger('light'); setSelectedPack(pack); }}

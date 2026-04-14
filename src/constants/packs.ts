@@ -6,66 +6,48 @@ export interface Pack {
   ageRestricted?: boolean;
 }
 
+export const RANDOM_PACK: Pack = {
+  id: 'random',
+  name: 'Random Topic',
+  emoji: '🎲',
+  words: []
+};
+
 export const DEFAULT_PACKS: Pack[] = [
   {
-    id: 'food',
-    name: '🍕 Food',
-    emoji: '🍕',
-    words: ['Pizza', 'Sushi', 'Burger', 'Tacos', 'Pasta', 'Ramen', 'Curry', 'Steak', 'Salad', 'Ice Cream', 'Chocolate', 'Pancakes', 'Waffles', 'Sandwich', 'Noodles', 'Fried Rice', 'Cheesecake', 'Dumplings', 'Hot Dog', 'Biryani']
+    id: 'kerala-food',
+    name: 'Kerala Food',
+    emoji: '🍛',
+    words: ['Puttu', 'Kadala curry', 'Appam', 'Biriyani', 'Parotta', 'Sadya', 'Pazham', 'Chaya', 'Kanji', 'Porotta', 'Beef fry', 'Tapioca', 'Unniyappam', 'Pathiri', 'Avial']
   },
   {
-    id: 'sports',
-    name: '⚽ Sports', 
-    emoji: '⚽',
-    words: ['Football', 'Cricket', 'Tennis', 'Basketball', 'Swimming', 'Boxing', 'Golf', 'Baseball', 'Volleyball', 'Badminton', 'Cycling', 'Wrestling', 'Archery', 'Gymnastics', 'Athletics']
+    id: 'kerala-places',
+    name: 'Kerala Places',
+    emoji: '🌴',
+    words: ['Thrissur', 'Kozhikode', 'Munnar', 'Alleppey', 'Wayanad', 'Kochi', 'Palakkad', 'Trivandrum', 'Guruvayur', 'Sabarimala']
   },
   {
-    id: 'movies',
-    name: '🎬 Movies',
+    id: 'daily-malayalam-life',
+    name: 'Daily Malayalam Life',
+    emoji: '🚌',
+    words: ['Autorickshaw', 'Harthal', 'Bandh', 'Onam', 'Vishu', 'Church', 'Temple festival', 'Kalyanam', 'Nercha', 'KSRTC bus']
+  },
+  {
+    id: 'malayalam-movies',
+    name: 'Malayalam Movies & Entertainment',
     emoji: '🎬',
-    words: ['Avatar', 'Titanic', 'Avengers', 'Batman', 'Inception', 'Interstellar', 'Frozen', 'Lion King', 'Joker', 'Parasite', 'Dunkirk', 'Oppenheimer', 'Barbie', 'Top Gun', 'The Matrix']
+    words: ['Mohanlal', 'Mammootty', 'Dulquer', 'Fahadh', 'OTT', 'Thallumaala', 'Premalu', 'Pulimurugan']
   },
   {
-    id: 'animals',
-    name: '🦁 Animals',
-    emoji: '🦁',
-    words: ['Elephant', 'Lion', 'Dolphin', 'Penguin', 'Cheetah', 'Gorilla', 'Peacock', 'Crocodile', 'Kangaroo', 'Flamingo', 'Panda', 'Tiger', 'Giraffe', 'Chameleon', 'Octopus']
+    id: 'kerala-jobs',
+    name: 'Kerala Jobs & Life',
+    emoji: '💼',
+    words: ['Gulf job', 'Pravasi', 'Chit fund', 'Rubber tapping', 'Paddy field', 'Toddy shop', 'PSC exam', 'Government job']
   },
   {
-    id: 'places',
-    name: '🌍 Places',
-    emoji: '🌍',
-    words: ['Paris', 'Tokyo', 'Dubai', 'New York', 'London', 'Sydney', 'Cairo', 'Mumbai', 'Rome', 'Barcelona', 'Maldives', 'Bali', 'Las Vegas', 'Istanbul', 'Singapore']
-  },
-  {
-    id: 'celebrities',
-    name: '⭐ Celebrities',
-    emoji: '⭐',
-    words: ['Elon Musk', 'Virat Kohli', 'Cristiano Ronaldo', 'Taylor Swift', 'Lionel Messi', 'Beyoncé', 'Shah Rukh Khan', 'Dwayne Johnson', 'Priyanka Chopra', 'BTS', 'Will Smith', 'Billie Eilish']
-  },
-  {
-    id: 'party-time',
-    name: '🎉 Party Time',
-    emoji: '🎉',
-    words: ['Dance Floor', 'DJ Booth', 'Confetti', 'Champagne', 'Karaoke', 'Photo Booth', 'Limbo', 'Disco Ball', 'Birthday Cake', 'Streamers', 'Shots', 'Hangover', 'Uber Home', 'Snapchat']
-  },
-  {
-    id: 'science',
-    name: '🔬 Science',
-    emoji: '🔬',
-    words: ['Black Hole', 'DNA', 'Volcano', 'Gravity', 'Photosynthesis', 'Atom', 'Ecosystem', 'Evolution', 'Radiation', 'Quantum', 'Telescope', 'Neuron', 'Fossil', 'Mutation', 'Galaxy']
-  },
-  {
-    id: 'spicy',
-    name: '🌶️ Spicy (18+)',
-    emoji: '🌶️',
-    words: ['First Kiss', 'Walk of Shame', 'Tinder', 'Ghosted', 'Situationship', 'Body Count', 'Red Flag', 'Soft Launch', 'Talking Stage', 'Netflix & Chill', 'Rizz', 'Sneaky Link'],
-    ageRestricted: true
-  },
-  {
-    id: 'technology',
-    name: '💻 Technology',
-    emoji: '💻',
-    words: ['Artificial Intelligence', 'Blockchain', 'Cloud Computing', 'Cybersecurity', 'App Store', 'WiFi', 'Algorithm', 'Bitcoin', 'VR Headset', 'Chatbot', 'Data Center', 'Deepfake']
+    id: 'kerala-sports',
+    name: 'Kerala Sports & Fun',
+    emoji: '⚽',
+    words: ['Cricket', 'Football', 'Kabbadi', 'Boat race', 'Kalaripayattu', 'Volleyball']
   }
 ];

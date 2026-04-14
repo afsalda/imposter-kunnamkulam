@@ -72,6 +72,17 @@ interface GameStore {
   resetGame: () => void;
 }
 
+export const AVATARS = [
+  { id: 'rockstar', emoji: '🧑‍🎤', name: 'Rockstar', color: '#FF6B35' },
+  { id: 'zen', emoji: '🧘', name: 'Zen Master', color: '#FFD93D' },
+  { id: 'dancer', emoji: '🕺', name: 'Dancer', color: '#FF6B9D' },
+  { id: 'gamer', emoji: '🎮', name: 'Gamer', color: '#6BCB77' },
+  { id: 'wizard', emoji: '🧙', name: 'Wizard', color: '#9B5DE5' },
+  { id: 'surfer', emoji: '🏄', name: 'Surfer', color: '#4FC3F7' },
+  { id: 'chef', emoji: '👨‍🍳', name: 'Chef', color: '#FF4757' },
+  { id: 'artist', emoji: '🎨', name: 'Artist', color: '#00B4D8' },
+];
+
 export const useGameStore = create<GameStore>((set, get) => ({
   mode: null,
   players: [],
@@ -95,10 +106,21 @@ export const useGameStore = create<GameStore>((set, get) => ({
   setMode: (mode) => set({ mode }),
   
   addPlayer: (name) => set((state) => {
+    // Find available avatars
+    const usedAvatarIds = state.players.map(p => p.avatarId);
+    const availableAvatars = AVATARS.filter(a => !usedAvatarIds.includes(a.id));
+    
+    // If no more unique avatars, just pick a random one from the full list
+    const avatar = availableAvatars.length > 0 
+      ? availableAvatars[Math.floor(Math.random() * availableAvatars.length)]
+      : AVATARS[Math.floor(Math.random() * AVATARS.length)];
+
     const newPlayer: Player = {
       id: Math.random().toString(36).substring(7),
       name,
-      avatar: '👤', // Default avatar
+      avatar: avatar.emoji,
+      avatarId: avatar.id,
+      avatarColor: avatar.color,
       isFaker: false
     };
     const newScores = { ...state.scores, [newPlayer.id]: 0 };

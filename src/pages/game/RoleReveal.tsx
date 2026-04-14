@@ -4,6 +4,7 @@ import { motion } from 'motion/react';
 import { useHaptics } from '../../hooks/useHaptics';
 import { useGameStore } from '../../store/gameStore';
 import { EyeOff } from 'lucide-react';
+import { PlayerCard } from '../../components/PlayerCard';
 
 export default function RoleReveal() {
   const navigate = useNavigate();
@@ -68,9 +69,13 @@ export default function RoleReveal() {
         transition={{ type: 'spring', damping: 15 }}
         className="flex flex-col items-center w-full h-full text-center"
       >
+        <div className="mt-10 mb-6">
+          <PlayerCard player={currentPlayer} className="w-24 h-32" />
+        </div>
+
         {currentPlayer.isFaker ? (
           <>
-            <div className="mt-10">
+            <div>
               <span className="inline-block bg-black/30 px-3 py-1.5 rounded-full text-xs font-extrabold tracking-[2px] mb-5">SHH... QUIET!</span>
               <h1 className="text-5xl font-display font-black text-white mb-4 uppercase tracking-tight leading-none">You are the Faker</h1>
               <p className="text-lg mt-4 opacity-90 font-medium">{currentPlayer.name}, don't let them catch you.</p>
@@ -82,7 +87,7 @@ export default function RoleReveal() {
           </>
         ) : (
           <>
-            <div className="mt-10">
+            <div>
               <span className="inline-block bg-black/30 px-3 py-1.5 rounded-full text-xs font-extrabold tracking-[2px] mb-5">{category}</span>
               <h1 className="text-5xl font-display font-black text-white mb-4 uppercase tracking-tight leading-none break-words">{secretWord}</h1>
               <p className="text-lg mt-4 opacity-90 font-medium">{currentPlayer.name}, remember this word.</p>

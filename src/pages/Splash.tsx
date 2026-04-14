@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { useHaptics } from '../hooks/useHaptics';
+import logoImg from '../assets/logo.png';
 
 export default function Splash() {
   const navigate = useNavigate();
@@ -17,14 +18,25 @@ export default function Splash() {
         initial={{ scale: 0.8, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ type: 'spring', bounce: 0.5 }}
-        className="flex flex-col items-center mb-16"
+        className="flex flex-col items-center mb-12"
       >
-        <div className="w-32 h-32 bg-primary rounded-3xl flex items-center justify-center mb-6 shadow-[0_0_40px_rgba(232,39,42,0.3)]">
-          <span className="text-6xl">🎭</span>
-        </div>
-        <h1 className="text-5xl font-bold tracking-tight mb-2">BluffIt</h1>
-        <p className="text-text-secondary text-lg text-center max-w-[250px]">
-          The social deduction party game of words and deception.
+        <img 
+          src={logoImg}
+          alt="വഞ്ചകൻ Logo"
+          style={{
+            width: '200px',
+            height: '200px',
+            objectFit: 'cover',
+            borderRadius: '50%',
+            display: 'block',
+            margin: '0 auto 20px auto',
+            border: '3px solid #C9A227',
+            filter: 'drop-shadow(0 0 20px rgba(201,162,39,0.7))'
+          }}
+        />
+        <h1 className="text-6xl font-black tracking-tight mb-4 font-malayalam text-white text-center">വഞ്ചകൻ</h1>
+        <p className="font-malayalam text-[clamp(14px,2.5vw,18px)] text-white/85 text-center max-w-[320px] mx-auto leading-[1.6]">
+          വാക്കുകളുടെയും വഞ്ചനയുടെയും സോഷ്യൽ ഡിഡക്ഷൻ പാർട്ടി ഗെയിം.
         </p>
       </motion.div>
 

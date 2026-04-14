@@ -2,7 +2,8 @@ import { useNavigate } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { useHaptics } from '../hooks/useHaptics';
 import { useGameStore } from '../store/gameStore';
-import { ArrowLeft, Trophy } from 'lucide-react';
+import { ArrowLeft, Trophy, Crown } from 'lucide-react';
+import { PlayerCard } from '../components/PlayerCard';
 
 export default function Leaderboard() {
   const navigate = useNavigate();
@@ -20,35 +21,42 @@ export default function Leaderboard() {
         >
           <ArrowLeft size={24} />
         </button>
-        <h1 className="text-2xl font-bold ml-2">Leaderboard</h1>
+        <h1 className="text-3xl font-display font-black ml-2 uppercase tracking-tight">Leaderboard</h1>
       </header>
 
-      <div className="flex-1 flex flex-col items-center">
-        <div className="w-24 h-24 bg-surface-2 rounded-full flex items-center justify-center mb-8 border border-border">
-          <Trophy size={48} className="text-warning" />
-        </div>
-
-        <div className="w-full max-w-sm space-y-3">
+      <div className="flex-1 flex flex-col items-center pb-24">
+        <div className="w-full max-w-sm space-y-6">
           {sortedPlayers.map((player, index) => (
             <motion.div 
               key={player.id}
               initial={{ x: -20, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
               transition={{ delay: index * 0.1 }}
-              className={`bg-surface border border-border rounded-xl p-4 flex items-center justify-between ${index === 0 ? 'border-warning/50 shadow-[0_0_15px_rgba(245,158,11,0.2)]' : ''}`}
+              className="flex items-center gap-6"
             >
-              <div className="flex items-center gap-4">
-                <span className={`font-bold w-6 text-center ${index === 0 ? 'text-warning text-xl' : 'text-text-faint'}`}>
-                  {index === 0 ? '👑' : index + 1}
-                </span>
-                <span className="text-white font-medium text-lg">{player.name}</span>
+              <div className="relative">
+                <PlayerCard player={player} className="w-24 h-32" />
+                {index === 0 && (
+                  <div className="absolute -top-4 -right-4 bg-warning text-black p-2 rounded-full shadow-xl animate-bounce">
+                    <Crown size={20} strokeWidth={3} />
+                  </div>
+                )}
+                <div className="absolute -left-3 top-1/2 -translate-y-1/2 bg-white text-black w-8 h-8 rounded-full flex items-center justify-center font-black shadow-lg border-2 border-bg">
+                  {index + 1}
+                </div>
               </div>
-              <span className="text-primary font-bold text-xl">{scores[player.id] || 0} pts</span>
+              <div className="flex-1">
+                <h3 className="text-2xl font-display font-black text-white uppercase tracking-tight leading-none mb-1">{player.name}</h3>
+                <span className="text-primary font-black text-xl uppercase tracking-widest">{scores[player.id] || 0} PTS</span>
+              </div>
             </motion.div>
           ))}
           
           {players.length === 0 && (
-            <p className="text-center text-text-secondary">No games played yet.</p>
+            <div className="text-center py-20">
+              <div className="text-6xl mb-4 opacity-20">👻</div>
+              <p className="text-text-secondary font-bold uppercase tracking-widest">No games played yet.</p>
+            </div>
           )}
         </div>
       </div>

@@ -18,6 +18,34 @@
 
   --font-display: 'Fredoka One', 'Nunito', ui-sans-serif, system-ui, sans-serif;
   --font-body: 'Inter', 'DM Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-malayalam: 'Noto Sans Malayalam', sans-serif;
+}
+
+@layer utilities {
+  .font-malayalam {
+    font-family: var(--font-malayalam);
+  }
+
+  @keyframes bounceIn {
+    0% { transform: scale(0.3); opacity: 0; }
+    50% { transform: scale(1.05); opacity: 1; }
+    70% { transform: scale(0.9); }
+    100% { transform: scale(1); }
+  }
+
+  .animate-bounceIn {
+    animation: bounceIn 0.5s ease forwards;
+  }
+
+  @keyframes glow {
+    0% { box-shadow: 0 0 5px rgba(232, 39, 42, 0.2); }
+    50% { box-shadow: 0 0 20px rgba(232, 39, 42, 0.6); }
+    100% { box-shadow: 0 0 5px rgba(232, 39, 42, 0.2); }
+  }
+
+  .animate-glow {
+    animation: glow 2s infinite ease-in-out;
+  }
 }
 
 @layer base {

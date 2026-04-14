@@ -3,6 +3,7 @@ import { motion } from 'motion/react';
 import { useHaptics } from '../../hooks/useHaptics';
 import { useGameStore } from '../../store/gameStore';
 import { Smartphone } from 'lucide-react';
+import { PlayerCard } from '../../components/PlayerCard';
 
 export default function PassPhone() {
   const navigate = useNavigate();
@@ -28,9 +29,7 @@ export default function PassPhone() {
         className="flex flex-col items-center w-full h-full"
       >
         <div className="mt-10 mb-8">
-          <div className="w-24 h-24 bg-surface-2 rounded-full flex items-center justify-center mx-auto border border-border">
-            <Smartphone size={48} className="text-primary" />
-          </div>
+          <PlayerCard player={currentPlayer} isLarge isGlow />
         </div>
         
         <h2 className="text-text-secondary text-xl mb-2 font-bold uppercase tracking-widest">Pass the phone to</h2>

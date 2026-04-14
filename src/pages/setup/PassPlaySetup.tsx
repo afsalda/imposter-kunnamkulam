@@ -5,6 +5,7 @@ import { useHaptics } from '../../hooks/useHaptics';
 import { useGameStore } from '../../store/gameStore';
 import { DEFAULT_PACKS, RANDOM_PACK } from '../../constants/packs';
 import { ArrowLeft, Plus, X, Settings2 } from 'lucide-react';
+import { PlayerCard } from '../../components/PlayerCard';
 
 export default function PassPlaySetup() {
   const navigate = useNavigate();
@@ -21,7 +22,7 @@ export default function PassPlaySetup() {
 
   const handleAddPlayer = (e?: React.FormEvent) => {
     e?.preventDefault();
-    if (newPlayerName.trim().length > 0 && players.length < 10) {
+    if (newPlayerName.trim().length > 0 && players.length < 8) {
       trigger('light');
       addPlayer(newPlayerName.trim());
       setNewPlayerName('');
@@ -46,7 +47,7 @@ export default function PassPlaySetup() {
           >
             <ArrowLeft size={24} />
           </button>
-          <h1 className="text-2xl font-bold ml-2">Setup Game</h1>
+          <h1 className="text-3xl font-display font-black ml-2 uppercase tracking-tight">Setup</h1>
         </div>
         <button 
           onClick={() => { trigger('light'); setShowSettings(!showSettings); }}
@@ -56,71 +57,65 @@ export default function PassPlaySetup() {
         </button>
       </header>
 
-      <div className="flex-1 overflow-y-auto px-6 pb-24">
+      <div className="flex-1 overflow-y-auto px-6 pb-32">
         {/* Players Section */}
-        <section className="mb-8 mt-4">
+        <section className="mb-10 mt-4">
           <div className="flex justify-between items-end mb-4">
-            <h2 className="text-lg font-bold text-text-secondary uppercase tracking-wider">Players ({players.length}/10)</h2>
-            {players.length < 3 && <span className="text-primary text-sm font-medium">Need {3 - players.length} more</span>}
+            <h2 className="text-sm font-bold text-text-secondary uppercase tracking-[2px]">Players ({players.length}/8)</h2>
+            {players.length < 3 && <span className="text-primary text-xs font-black uppercase tracking-widest">Need {3 - players.length} more</span>}
           </div>
           
-          <form onSubmit={handleAddPlayer} className="flex gap-2 mb-4">
+          <form onSubmit={handleAddPlayer} className="flex gap-2 mb-8">
             <input
               type="text"
               value={newPlayerName}
               onChange={(e) => setNewPlayerName(e.target.value)}
               placeholder="Enter player name..."
-              className="flex-1 bg-surface border border-border rounded-xl px-4 py-3 text-white placeholder-text-faint focus:outline-none focus:border-primary transition-colors"
+              className="flex-1 bg-surface border-2 border-border rounded-2xl px-5 py-4 text-white placeholder-text-faint focus:outline-none focus:border-primary transition-colors font-bold"
               maxLength={12}
             />
             <button 
               type="submit"
-              disabled={!newPlayerName.trim() || players.length >= 10}
-              className="bg-primary text-white rounded-xl px-4 py-3 disabled:opacity-50 transition-opacity flex items-center justify-center"
+              disabled={!newPlayerName.trim() || players.length >= 8}
+              className="bg-primary text-white rounded-2xl px-6 py-4 disabled:opacity-50 transition-opacity flex items-center justify-center shadow-lg"
             >
-              <Plus size={24} />
+              <Plus size={28} strokeWidth={3} />
             </button>
           </form>
 
-          <div className="flex flex-wrap gap-2">
+          <div className="grid grid-cols-2 gap-4">
             <AnimatePresence>
-              {players.map(player => (
-                <motion.div
-                  key={player.id}
-                  initial={{ scale: 0.8, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  exit={{ scale: 0.8, opacity: 0 }}
-                  className="bg-surface-2 border border-border rounded-full pl-3 pr-1 py-1 flex items-center gap-2"
-                >
-                  <span className="font-medium">{player.name}</span>
+              {players.map((player, idx) => (
+                <div key={player.id} className="relative group">
+                  <PlayerCard player={player} index={idx} className="w-full h-[180px]" />
                   <button 
                     onClick={() => { trigger('light'); removePlayer(player.id); }}
-                    className="w-6 h-6 rounded-full bg-bg flex items-center justify-center text-text-secondary hover:text-primary transition-colors"
+                    className="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-white text-black flex items-center justify-center shadow-xl z-10 hover:scale-110 transition-transform"
                   >
-                    <X size={14} />
+                    <X size={18} strokeWidth={3} />
                   </button>
-                </motion.div>
+                </div>
               ))}
             </AnimatePresence>
           </div>
         </section>
 
         {/* Packs Section */}
-        <section className="mb-8">
-          <h2 className="text-lg font-bold text-text-secondary uppercase tracking-wider mb-4">Word Pack</h2>
-          <div className="flex overflow-x-auto gap-3 pb-4 -mx-6 px-6 snap-x">
+        <section className="mb-10">
+          <h2 className="text-sm font-bold text-text-secondary uppercase tracking-[2px] mb-4">Word Pack</h2>
+          <div className="flex overflow-x-auto gap-4 pb-6 -mx-6 px-6 snap-x scrollbar-hide">
             {[RANDOM_PACK, ...DEFAULT_PACKS].map(pack => (
               <button
                 key={pack.id}
                 onClick={() => { trigger('light'); setSelectedPack(pack); }}
-                className={`snap-center shrink-0 w-32 aspect-square rounded-2xl flex flex-col items-center justify-center gap-2 transition-all ${
+                className={`snap-center shrink-0 w-36 aspect-[4/5] rounded-3xl flex flex-col items-center justify-center gap-3 transition-all ${
                   selectedPack.id === pack.id 
-                    ? 'bg-primary border-2 border-primary shadow-[0_0_20px_rgba(232,39,42,0.3)]' 
-                    : 'bg-surface border border-border hover:bg-surface-2'
+                    ? 'bg-primary border-2 border-primary shadow-[0_0_30px_rgba(232,39,42,0.4)] scale-105' 
+                    : 'bg-surface border-2 border-border hover:bg-surface-2'
                 }`}
               >
-                <span className="text-3xl">{pack.emoji}</span>
-                <span className="font-bold text-sm text-center px-2">{pack.name}</span>
+                <span className="text-4xl">{pack.emoji}</span>
+                <span className="font-black text-xs text-center px-2 uppercase tracking-wide leading-tight">{pack.name}</span>
               </button>
             ))}
           </div>

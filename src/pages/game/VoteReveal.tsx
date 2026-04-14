@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { useHaptics } from '../../hooks/useHaptics';
 import { useGameStore } from '../../store/gameStore';
+import { PlayerCard } from '../../components/PlayerCard';
 
 export default function VoteReveal() {
   const navigate = useNavigate();
@@ -80,16 +81,20 @@ export default function VoteReveal() {
                     key={index}
                     initial={{ opacity: 0, x: -50, rotateX: -90 }}
                     animate={{ opacity: 1, x: 0, rotateX: 0 }}
-                    className="bg-surface-2 border border-border rounded-2xl p-5 flex justify-between items-center"
+                    className="bg-surface-2 border-2 border-border rounded-2xl p-4 flex items-center gap-4"
                   >
-                    <span className="text-text-secondary font-bold">{voter?.name} voted for</span>
-                    <span className="text-white font-black text-xl uppercase tracking-wide">{target?.name}</span>
+                    {voter && <PlayerCard player={voter} className="w-12 h-16 shrink-0" />}
+                    <div className="flex-1">
+                      <span className="text-text-secondary text-xs font-black uppercase tracking-widest block mb-1">{voter?.name} voted for</span>
+                      <span className="text-white font-black text-xl uppercase tracking-tight">{target?.name}</span>
+                    </div>
+                    {target && <PlayerCard player={target} className="w-12 h-16 shrink-0" />}
                   </motion.div>
                 );
               })}
             </AnimatePresence>
             {revealedCount < votes.length && (
-              <div className="text-center text-text-faint mt-8 animate-pulse font-bold uppercase tracking-widest">
+              <div className="text-center text-text-faint mt-8 animate-pulse font-black uppercase tracking-[3px] text-xs">
                 Revealing votes...
               </div>
             )}
@@ -109,14 +114,16 @@ export default function VoteReveal() {
               </>
             ) : (
               <>
-                <div className="text-6xl mb-6">{isFakerCaught ? '🎯' : '😱'}</div>
+                <div className="mb-8 flex justify-center">
+                  {mostVotedPlayer && <PlayerCard player={mostVotedPlayer} isLarge isGlow />}
+                </div>
                 <h1 className={`text-5xl font-display font-black mb-2 uppercase tracking-tight leading-none ${isFakerCaught ? 'text-success' : 'text-primary'}`}>
                   {isFakerCaught ? 'Faker Caught!' : 'Faker Escaped!'}
                 </h1>
-                <p className="text-white text-xl font-bold mb-2 mt-6">
+                <p className="text-white text-xl font-black mb-2 mt-6 uppercase tracking-tight">
                   {mostVotedPlayer?.name} received {maxVotes} votes.
                 </p>
-                <p className="text-text-secondary mb-8 font-medium">
+                <p className="text-text-secondary mb-8 font-bold uppercase tracking-widest text-sm">
                   {isFakerCaught ? 'They were indeed the Faker.' : 'They were NOT the Faker.'}
                 </p>
               </>

@@ -4,11 +4,12 @@ import { motion } from 'motion/react';
 import { useHaptics } from '../../hooks/useHaptics';
 import { useGameStore } from '../../store/gameStore';
 import { Timer, ArrowRight } from 'lucide-react';
+import { PlayerCard } from '../../components/PlayerCard';
 
 export default function Discuss() {
   const navigate = useNavigate();
   const { trigger } = useHaptics();
-  const { clues, startVoting } = useGameStore();
+  const { clues, players, startVoting } = useGameStore();
   
   const [timeLeft, setTimeLeft] = useState(120); // 2 minutes for discussion
 
@@ -44,18 +45,24 @@ export default function Discuss() {
       </div>
 
       <div className="flex-1 overflow-y-auto space-y-4 pb-24">
-        {clues.map((clue, index) => (
-          <motion.div
-            key={clue.playerId}
-            initial={{ x: -50, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            transition={{ delay: index * 0.1 }}
-            className="bg-surface-2 border border-border rounded-2xl p-5 flex flex-col"
-          >
-            <span className="text-text-secondary text-sm font-bold mb-1">{clue.playerName}</span>
-            <span className="text-white text-2xl font-bold uppercase tracking-wide">"{clue.clue}"</span>
-          </motion.div>
-        ))}
+        {clues.map((clue, index) => {
+          const player = players.find(p => p.id === clue.playerId);
+          return (
+            <motion.div
+              key={clue.playerId}
+              initial={{ x: -50, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ delay: index * 0.1 }}
+              className="bg-surface-2 border-2 border-border rounded-2xl p-4 flex items-center gap-4"
+            >
+              {player && <PlayerCard player={player} className="w-16 h-20 shrink-0" />}
+              <div className="flex flex-col">
+                <span className="text-text-secondary text-xs font-black uppercase tracking-widest mb-1">{clue.playerName}</span>
+                <span className="text-white text-2xl font-black uppercase tracking-tight">"{clue.clue}"</span>
+              </div>
+            </motion.div>
+          );
+        })}
       </div>
 
       <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-bg via-bg to-transparent">

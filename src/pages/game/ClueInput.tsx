@@ -4,6 +4,7 @@ import { motion } from 'motion/react';
 import { useHaptics } from '../../hooks/useHaptics';
 import { useGameStore } from '../../store/gameStore';
 import { Check } from 'lucide-react';
+import { PlayerCard } from '../../components/PlayerCard';
 
 export default function ClueInput() {
   const navigate = useNavigate();
@@ -46,7 +47,10 @@ export default function ClueInput() {
   return (
     <div className="h-full min-h-full flex flex-col p-6 bg-bg">
       <header className="flex justify-between items-center mb-8 pt-4">
-        <h1 className="text-xl font-bold text-text-secondary">{currentPlayer.name}'s Clue</h1>
+        <div className="flex items-center gap-3">
+          <PlayerCard player={currentPlayer} className="w-12 h-16" />
+          <h1 className="text-xl font-bold text-text-secondary uppercase tracking-widest">{currentPlayer.name}'s Clue</h1>
+        </div>
         {settings.timerDuration && (
           <div className={`w-12 h-12 rounded-full flex items-center justify-center font-bold text-lg border-4 ${timeLeft <= 10 ? 'border-primary text-primary animate-pulse' : 'border-white/20 border-t-white text-white'}`}>
             {timeLeft}

@@ -3,7 +3,9 @@ import { Pack } from '../constants/packs';
 export interface Player {
   id: string;
   name: string;
-  avatar: string; // emoji or avatar index
+  avatar: string; // emoji
+  avatarId: string;
+  avatarColor: string;
   isFaker: boolean;
 }
 

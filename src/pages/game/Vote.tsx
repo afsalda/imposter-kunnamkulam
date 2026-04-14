@@ -4,6 +4,8 @@ import { motion } from 'motion/react';
 import { useHaptics } from '../../hooks/useHaptics';
 import { useGameStore } from '../../store/gameStore';
 
+import { PlayerCard } from '../../components/PlayerCard';
+
 export default function Vote() {
   const navigate = useNavigate();
   const { trigger } = useHaptics();
@@ -48,23 +50,21 @@ export default function Vote() {
           return (
             <motion.button
               key={player.id}
-              whileHover={!isSelf ? { scale: 1.05 } : {}}
-              whileTap={!isSelf ? { scale: 0.95 } : {}}
               onClick={() => handleSelect(player.id)}
               disabled={isSelf}
-              className={`aspect-square rounded-3xl flex flex-col items-center justify-center p-4 transition-all ${
-                isSelf 
-                  ? 'bg-surface border border-border opacity-30 cursor-not-allowed' 
-                  : isSelected
-                    ? 'bg-primary border-2 border-primary shadow-[0_0_20px_rgba(232,39,42,0.3)]'
-                    : 'bg-surface-2 border border-border hover:bg-surface'
-              }`}
+              className={`relative transition-all ${isSelf ? 'opacity-30 grayscale' : ''}`}
             >
-              <div className="text-4xl mb-2">{player.avatar}</div>
-              <span className={`font-bold text-lg text-center ${isSelected ? 'text-white' : 'text-text-secondary'}`}>
-                {player.name}
-              </span>
-              {isSelf && <span className="text-xs text-text-faint mt-1">(You)</span>}
+              <PlayerCard 
+                player={player} 
+                className={`w-full h-[180px] border-4 transition-all ${
+                  isSelected ? 'border-white scale-105 z-10' : 'border-transparent'
+                }`}
+              />
+              {isSelf && (
+                <div className="absolute inset-0 flex items-center justify-center bg-black/40 rounded-[20px]">
+                  <span className="text-white font-black uppercase tracking-widest text-sm">YOU</span>
+                </div>
+              )}
             </motion.button>
           );
         })}

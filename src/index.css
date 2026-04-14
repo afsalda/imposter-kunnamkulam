@@ -1,0 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Inter:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #0D0D0D;
+  --color-surface: #1A1A1A;
+  --color-surface-2: #242424;
+  --color-primary: #E8272A;
+  --color-primary-dark: #B01E20;
+  --color-text-primary: #FFFFFF;
+  --color-text-secondary: #A0A0A0;
+  --color-text-faint: #555555;
+  --color-faker: #E8272A;
+  --color-word: #2D6BE4;
+  --color-success: #22C55E;
+  --color-warning: #F59E0B;
+  --color-border: rgba(255, 255, 255, 0.08);
+
+  --font-display: 'Fredoka One', 'Nunito', ui-sans-serif, system-ui, sans-serif;
+  --font-body: 'Inter', 'DM Sans', ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  body {
+    @apply bg-bg text-text-primary font-body antialiased;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display;
+  }
+}

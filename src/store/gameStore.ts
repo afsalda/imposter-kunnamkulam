@@ -157,7 +157,12 @@ export const useGameStore = create<GameStore>((set, get) => ({
   assignRoles: () => set((state) => {
     let players = state.players;
     if (state.settings.shufflePlayers) {
-      players = [...players].sort(() => Math.random() - 0.5);
+      // Fisher-Yates shuffle for proper randomization
+      players = [...players];
+      for (let i = players.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [players[i], players[j]] = [players[j], players[i]];
+      }
     }
     const playersWithRoles = assignRoles(players, state.settings.fakerCount);
     

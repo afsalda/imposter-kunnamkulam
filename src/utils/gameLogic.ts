@@ -10,7 +10,12 @@ export interface Player {
 }
 
 export function assignRoles(players: Player[], fakerCount: 1 | 2): Player[] {
-  const shuffled = [...players].sort(() => Math.random() - 0.5);
+  // Fisher-Yates shuffle for proper randomization
+  const shuffled = [...players];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
   return shuffled.map((player, index) => ({
     ...player,
     isFaker: index < fakerCount
